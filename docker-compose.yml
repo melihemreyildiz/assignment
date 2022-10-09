@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: ounass
+      POSTGRES_PASSWORD: public
+      POSTGRES_USER: postgres
+    volumes:
+      - postgre_data:/var/lib/postgresql/data
+  backend:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      PG_USER: postgres
+      PG_PASSWORD: public
+      PG_HOST: postgresql
+      PG_PORT: 5432
+volumes:
+  postgre_data:
